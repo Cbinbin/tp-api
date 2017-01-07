@@ -1,0 +1,27 @@
+const router = require('express').Router()
+    , info = require('./infor/info')
+    , change = require('./infor/change')
+    , headimg = require('./infor/headimg')
+    , thn = require('./infor/thn')
+    , video = require('./video_r')
+    , history = require('./history_r')
+    , favor = require('./favor_r')
+    , fan = require('./fan')
+    , comment = require('./comment_r')
+    , message = require('./message')
+    , checkToken = require('../utils/checkToken')
+
+checkToken(router)
+
+router.use('/info', info)
+router.use('/change', change)
+router.use('/headimg', headimg)
+router.use('/thn', thn)
+router.use('/video', video)
+router.use('/history', history)
+router.use('/favorite', favor)
+router.use('/fan', fan)
+router.use('/comment', comment)
+router.use('/message', message)
+
+module.exports = router
