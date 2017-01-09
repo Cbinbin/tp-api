@@ -5,8 +5,8 @@ const router = require('express').Router()
     , heroku = require('../../hostUrl')
 
 router.get('/', (req, res)=> {
-	const per = Number(req.query.per) || 5
-        , page = Number(req.query.page) || 1
+	const per = Number(req.query.per)
+        , page = Number(req.query.page)
 	Video.find()
 	.populate('poster', 'nickname thumbnail head_pic follows pub_videos')
 	.populate('video_url', 'vid_url')
