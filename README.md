@@ -168,10 +168,6 @@ GET    http://localhost:3333/video/?per=${per}&page=${page}
 ```
 per: 个数   
 page:　页数   
-> ### 获取全部video(按上传时间从新到旧排列)
-```js
-GET    http://localhost:3333/video/new?per=${per}&page=${page}
-```
     
 > ### 获取video
 ```js
@@ -185,7 +181,12 @@ GET    http://localhost:3333/video/sort?channel=${channel}&per=${per}&page=${pag
 per: 个数   
 page:　页数   
 eg. channel = 热门
-
+    
+> ### 按频道获取video(按上传时间从新到旧排列)
+```js
+GET    http://localhost:3333/video/sort/new?channel=${channel}&per=${per}&page=${page}
+```
+    
 > ### 给video换频道
 ```js
 PATCH    http://localhost:3333/video/:videoId/channel

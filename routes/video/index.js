@@ -56,6 +56,24 @@ router.get('/sort', (req, res)=> {    //?channel=${channel}
 	})
 })
 
+router.get('/sort/new', (req, res)=> {    //?channel=${channel}
+	const per = Number(req.query.per) || 5
+        , page = Number(req.query.page) || 1
+	Video.find()
+	.where('channel').equals(req.query.channel)
+	.populate('poster', 'nickname thumbnail head_pic follows pub_videos')
+	.populate('video_url', 'vid_url')
+	.populate('cover', 'cover_url')
+	.populate('comments', 'chatTF commenter remark answer laud remark_time')
+	.sort({create_time: -1})
+	.limit(per)
+	.skip((page - 1) * per)
+	.exec((err, vids)=> {
+		if(err) return res.send(err)
+		res.send(vids)
+	})
+})
+
 router.get('/:id', (req, res)=> {
 	Video.findOne({_id: req.params.id})
 	.populate('poster', 'nickname thumbnail head_pic follows pub_videos')
