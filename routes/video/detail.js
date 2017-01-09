@@ -9,6 +9,7 @@ router.post('/', (req, res)=> {    //?token=${token}
 		video_url: null,
 		cover: null,
 		channel: req.body.channel || 'hot',
+		length: req.body.length || null,
 		view_number: 0,
 		like_number: 0,
 		comment_number: 0,

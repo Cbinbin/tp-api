@@ -111,13 +111,14 @@ POST    http://localhost:3333/user/thn/r?token=${token}
 *按以下2个步骤发布视频*
 > ### 1.添加标题(可包含频道)
 ```js
-POST    http://localhost:3333/user/video/detail?scsId=${scsId}&token=${token}
+POST    http://localhost:3333/user/video/detail?token=${token}
 ```
 scsId 为 video 截图的Id   
 ```js
 {
 	"title": ${title},    //标题 (String) 
 	//"channel": ${channel}    //频道 (String)
+	//"length": ${length}     //时长(String)
 }
 ```
 => 视频信息及Id     
@@ -129,6 +130,7 @@ scsId 为 video 截图的Id
 	"video_url": "xxx",    //视频链接Id (ObjectId)
 	"cover": "xxx",    //视频截图Id (ObjectId)
 	"channel": "xxx",    //频道 (String)
+	"length": "xxx",	//时长(String)
 	"view_number": 0,    //观看人数 (Number)
 	"like_number": 0,    //喜欢人数 (Number)
 	"comment_number": 0,    //评论人数 (Number)
@@ -142,16 +144,35 @@ POST    http://localhost:3333/user/video/push/:videoId?token=${token}
 ```
 key: video     
 // videoId为上一步的信息Id   
-=> 视频路径及Id   
+=> 视频路径及Id       
+> ### 删除video
+```js
+DELETE    http://localhost:3333/user/video/del/:videoId?token=${token}
+```
+=> video deleted success    
+> ### 获取video下载链接
+```js
+GET    http://localhost:3333/video/:videoId/download
+```
+=> 
+```js
+{
+	downloadUrl: ${downloadUrl}
+}
+```
 
 ----
-> ### 获取全部video
+> ### 获取全部video(按观看人数降序排列)
 ```js
 GET    http://localhost:3333/video/?per=${per}&page=${page}
 ```
 per: 个数   
-page:　页数
-
+page:　页数   
+> ### 获取全部video(按上传时间从新到旧排列)
+```js
+GET    http://localhost:3333/video/new?per=${per}&page=${page}
+```
+    
 > ### 获取video
 ```js
 GET    http://localhost:3333/video/:videoId
@@ -171,7 +192,7 @@ PATCH    http://localhost:3333/video/:videoId/channel
 ```
 ```js
 {
-	"channel": ${channel}	//'hot', 'dobe', 'curious', 'entertainment', 'interCelebrity', 'society', 'goddess', 'movies', 'music', 'comic', 'pet', 'sports'
+	"channel": ${channel}	//'hot'('热门'), 'dobe'('逗比'), 'curious'('猎奇'), 'entertainment'('娱乐'), 'interCelebrity'('网红'), 'society'('社会'), 'goddess'('女神'), 'movies'('影视'), 'music'('音乐'), 'comic'('动漫'), 'pet'('萌宠'), 'sports'('体育')
 }
 ```
 ----

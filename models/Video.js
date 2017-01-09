@@ -29,6 +29,9 @@ const videoSchema = new Schema({
 		enum: ['hot', 'dobe', 'curious', 'entertainment', 'interCelebrity', 'society',
 				'goddess', 'movies', 'music', 'comic', 'pet', 'sports']
 	},
+	length: {
+		type: String,
+	},
 	view_number: {
 		type: Number,
 	},

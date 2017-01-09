@@ -57,7 +57,7 @@ router.post('/r', (req, res)=> {
 		HeadPic.findOneAndUpdate(
 			{_id: req.uid},
 			{$set: {headPic_url: heroku.HOST + req.file.path}},
-			{new: true},    //, upsert: true
+			{new: true},
 			(err, headimg)=> {
 				if(err) return console.log(err)
 			}

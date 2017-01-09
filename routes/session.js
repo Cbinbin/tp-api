@@ -4,8 +4,6 @@ const router = require('express').Router()
 	, wxApis = require('../utils/wxApis')
 	, WXBizDataCrypt = require('../utils/WXBizDataCrypt')
 	, Info = require('../models/Info')
-	, xcxId = process.env.XCX_ID
-	, xcxSecret = process.env.XCX_SECRET
 
 function setinfo(openid, nickname, sex, headpic, res) {
 	Info.findOne({openid: openid})
@@ -54,8 +52,10 @@ function setinfo(openid, nickname, sex, headpic, res) {
 
 router.get('/', (req, res)=> {
 	const code = req.query.code
-	const iv = req.query.iv 
-    const encryptedData = req.query.encryptedData
+		, iv = req.query.iv 
+    	, encryptedData = req.query.encryptedData
+    	, xcxId = process.env.XCX_ID
+		, xcxSecret = process.env.XCX_SECRET
     if (!code || !iv || !encryptedData)
     	return res.send({message: 'Missing Query String!'})
     request.get(`${wxApis.session}?appid=${xcxId}&secret=${xcxSecret}&js_code=${code}&grant_type=authorization_code`)
