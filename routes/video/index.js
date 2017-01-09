@@ -12,7 +12,6 @@ router.get('/', (req, res)=> {
 	.populate('video_url', 'vid_url')
 	.populate('cover', 'cover_url')
 	.populate('comments', 'chatTF commenter remark answer laud remark_time')
-	.sort({view_number: -1})
 	.limit(per)
 	.skip((page - 1) * per)
 	.exec((err, vids)=> {
