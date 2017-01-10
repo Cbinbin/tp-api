@@ -118,7 +118,6 @@ scsId 为 video 截图的Id
 {
 	"title": ${title},    //标题 (String) 
 	//"channel": ${channel}    //频道 (String)
-	//"length": ${length}     //时长(String)
 }
 ```
 => 视频信息及Id     

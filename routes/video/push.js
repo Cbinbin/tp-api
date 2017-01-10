@@ -1,4 +1,5 @@
 const router = require('express').Router()
+    , request = require('superagent')
     , multer = require('multer')
     , qiniu = require('qiniu')
     , VideoUrl = require('../../models/VideoUrl')
@@ -7,6 +8,9 @@ const router = require('express').Router()
     , heroku = require('../../hostUrl')
 
 function createVideo(cname, vname, vid, res) {
+	var duration
+	  , ff
+	  , ss
 	const scs = new Cover({
 		cover_url: heroku.QN_C + cname,
 	})
@@ -17,16 +21,24 @@ function createVideo(cname, vname, vid, res) {
 		if(err) return res.send(err)
 		vidurl.save((err)=> {
 			if(err) return res.send(err)
-			Video.findOneAndUpdate(
-				{_id: vid},
-				{$set: {cover: scs._id,
-					video_url: vidurl._id}},
-				{new: true},
-				(err,video)=> {
-					if(err) return res.send(err)
-					res.send(video)
-				}
-			)
+			request.get(`${vidurl.vid_url}?avinfo`)
+			.end((err, result)=> {
+				if(err) return console.log(err)
+				duration = JSON.parse(result.text).format.duration
+				ff = parseInt(Number(duration)/60) < 10 ? '0'+parseInt(Number(duration)/60) : parseInt(Number(duration)/60)
+				ss = parseInt(Number(duration)%60) < 10 ? '0'+parseInt(Number(duration)%60) : parseInt(Number(duration)%60)
+				Video.findOneAndUpdate(
+					{_id: vid},
+					{$set: {cover: scs._id,
+						video_url: vidurl._id,
+						length: `${ff}:${ss}`}},
+					{new: true},
+					(err,video)=> {
+						if(err) return res.send(err)
+						res.send(video)
+					}
+				)
+			})
 		})
 	})
 }
@@ -34,7 +46,7 @@ function createVideo(cname, vname, vid, res) {
 var storage = multer.diskStorage({})
 var upload = multer({ storage: storage }).single('video')
 
-router.post('/:id', (req, res)=> {
+router.post('/:id', (req, res, next)=> {
 	qiniu.conf.ACCESS_KEY = process.env.QN_ACCESS
 	qiniu.conf.SECRET_KEY = process.env.QN_SECRET
 	var bucket = 'tp-video'
@@ -65,9 +77,10 @@ router.post('/:id', (req, res)=> {
 	upload(req, res, (err) => {
 		if(err) return res.send(err)
 		Video.findOne({_id: req.params.id})
+		.where('poster').equals(req.uid)
 		.exec((err, video)=> {
 			if(err) return res.send(err)
-			else if(!video) return res.send({error: 'Not found video Id'})
+			else if(!video) return res.send({error: 'Not found the video'})
 			if(video.video_url) return res.send({warning: 'Video has been uploaded'})
 			uploadFile(qntoken, key, req.file.path)
 		})
