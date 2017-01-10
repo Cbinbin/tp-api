@@ -1,8 +1,8 @@
 # tp-api
 this is api that imitate the operation of Toupai.
    
-远程: http://tp.newteo.com/   or    http://copytp.herokuapp.com/    
-数据库mongodb: mongo ds149268.mlab.com:49268/tplibrary -u tpapi -p tpapi    
+远程: http://tp.newteo.com/    
+ 
    
 ## token
 > ### 小程序登录

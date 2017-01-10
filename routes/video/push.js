@@ -64,7 +64,13 @@ router.post('/:id', (req, res)=> {
 	}
 	upload(req, res, (err) => {
 		if(err) return res.send(err)
-		uploadFile(qntoken, key, req.file.path)
+		Video.findOne({_id: req.params.id})
+		.exec((err, video)=> {
+			if(err) return res.send(err)
+			else if(!video) return res.send({error: 'Not found video Id'})
+			if(video.video_url) return res.send({warning: 'Video has been uploaded'})
+			uploadFile(qntoken, key, req.file.path)
+		})
 	})	
 })
 
