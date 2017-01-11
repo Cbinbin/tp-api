@@ -124,7 +124,7 @@ router.get('/:id/download', (req, res)=> {
 		if(err) return res.send(err)
 		else if(!vid) return res.send({error: 'Not found the video Id'})
 		if(!vid.video_url) return res.send({error: 'Not found the video_url'})
-		var url = vid.video_url.vid_url
+		var url = vid.video_url.vid_url + '?attname='
 		  , policy = new qiniu.rs.GetPolicy()
 		  , downloadUrl = policy.makeRequest(url)
 		res.send({downloadUrl: downloadUrl})
