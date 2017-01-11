@@ -5,6 +5,8 @@ const express = require('express')
     , user = require('./routes/user_r')
     , video = require('./routes/video')
     , info = require('./routes/infor/get')
+    , history = require('./routes/history/nologin')
+    , favorite = require('./routes/favor/nologin')
 
 const cors = require('cors')
     , bodyParser = require('body-parser')
@@ -26,6 +28,8 @@ app.use('/yzm', routes.yzm)
 app.use('/user', user)
 app.use('/video', video)
 app.use('/info', info)
+app.use('/history', history)
+app.use('/favorite', favorite)
 
 app.listen(port, ()=> {
 	console.log('Server is ruuning on port: ' + port)

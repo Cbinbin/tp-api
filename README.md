@@ -405,3 +405,20 @@ GET    http://localhost:3333/user/message?token=${token}
 	"createTime": "2017-01-05T03:48:00.522Z"　　　　//消息时间
 }, {...}
 ```
+## 未登录  
+> ### 播放历史(+)  
+```js
+PATCH    http://localhost:3333/history/:videoId
+```
+=> 视频信息　　　
+> ### 我喜欢的  
+. (+)   
+```js
+PATCH    http://localhost:3333/favorite/:videoId/inc
+```
+=> 视频信息　　　
+. (-)   
+```js
+PATCH    http://localhost:3333/favorite/:videoId/sub
+```
+=> 视频信息　　　
