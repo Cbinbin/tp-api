@@ -412,12 +412,12 @@ PATCH    http://localhost:3333/history/:videoId
 ```
 => 视频信息　　　
 > ### 我喜欢的  
-. (+)   
+>> . (+)   
 ```js
 PATCH    http://localhost:3333/favorite/:videoId/inc
 ```
-=> 视频信息　　　
-. (-)   
+=> 视频信息    
+>> . (-)   
 ```js
 PATCH    http://localhost:3333/favorite/:videoId/sub
 ```
