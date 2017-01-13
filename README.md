@@ -428,3 +428,11 @@ PATCH    http://localhost:3333/favorite/:videoId/sub
 > ```js
 > GET    http://localhost:3333/user/pub?token=${token}
 > ```
+> > ### 获取关注
+> ```js
+> GET    http://localhost:3333/user/follows?token=${token}
+> ```
+> > ### 获取粉丝
+> ```js
+> GET    http://localhost:3333/user/fans?token=${token}
+> ```
