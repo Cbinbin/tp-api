@@ -2,6 +2,8 @@ const router = require('express').Router()
     , Info = require('../../models/Info')
 
 router.get('/', (req, res)=> {
+      const per = Number(req.query.per)
+             , page = Number(req.query.page)
 	Info.findOne({_id: req.uid}, {openid:0, sex:0,  signature:0, __v:0})
 	.populate({path: 'favorites',
 		select: 'poster title video_url cover channel view_number like_number comments',
@@ -10,6 +12,8 @@ router.get('/', (req, res)=> {
 			select: 'nickname vid_url cover_url'
 		}
 	})
+      .limit(per)
+      .skip((page - 1) * per)
 	.exec((err, info)=> {
 		if(err) return res.send(err)
 		else if(!info) return res.send({error: 'Not found info Id'})

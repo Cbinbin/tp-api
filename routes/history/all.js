@@ -4,15 +4,20 @@ const router = require('express').Router()
     , History = require('../../models/History')
 
 router.get('/', (req, res)=> {
+      const per = Number(req.query.per)
+             , page = Number(req.query.page)
 	History.find({ownerId: req.uid}, {create_time: 0, __v: 0})
 	.populate('ownerId', 'nickname')
-	.populate({path: 'videoId', 
-		select: 'poster　title video_url cover view_number like_number comment_number', 
+	.populate({path: 'videoId',
+		select: 'poster　title video_url cover view_number like_number comment_number',
 		populate: {
 			path: 'poster cover',    //2个参数
-			select: '-_id　nickname cover_url' 
+			select: '-_id　nickname cover_url'
 		}
 	})
+      .limit(per)
+      .skip((page - 1) * per)
+      .sort({view_time: -1})
 	.exec((err, his)=> {
 		if(err) return res.send(err)
 		res.send(his)
