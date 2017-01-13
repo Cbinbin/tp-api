@@ -78,7 +78,11 @@ router.get('/:id', (req, res)=> {
 	.populate('poster', 'nickname thumbnail head_pic follows pub_videos')
 	.populate('video_url', 'vid_url')
 	.populate('cover', 'cover_url')
-	.populate('comments', 'chatTF commenter remark answer laud laud_number remark_time')
+	.populate({path: 'comments',
+            select: 'chatTF commenter remark answer laud laud_number remark_time',
+            populate: {path: 'commenter',
+                  select: 'nickname thumbnail head_pic' }
+      })
 	.exec((err, vid)=> {
 		if(err) return res.send(err)
 		else if(!vid) return res.json('Nothing')
@@ -95,17 +99,17 @@ router.patch('/:id/channel', (req, res)=> {
 			if(err) return res.send(err)
 			res.send(vid)
 		})
-	})	
+	})
 })
 
 router.get('/comment/:id', (req, res)=> {
 	Comment.findOne({_id: req.params.id})
 	.populate('commenter', 'nickname thumbnail head_pic')
-	.populate({path: 'answer', 
-		select: 'chatTF commenter remark answer laud laud_number remark_time', 
+	.populate({path: 'answer',
+		select: 'chatTF commenter remark answer laud laud_number remark_time',
 		populate: {
 			path: 'commenter',
-			select: 'nickname thumbnail head_pic' 
+			select: 'nickname thumbnail head_pic'
 		}
 	})
 	.exec((err, comment)=> {
