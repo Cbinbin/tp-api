@@ -422,3 +422,9 @@ PATCH    http://localhost:3333/favorite/:videoId/inc
 PATCH    http://localhost:3333/favorite/:videoId/sub
 ```
 => 视频信息　　　
+
+## .
+> ### 获取发布视频
+> ```js
+> GET    http://localhost:3333/user/pub?token=${token}
+> ```
