@@ -19,6 +19,9 @@ router.get('/video', (req, res)=> {
 	    , re = new RegExp(q,'ig')
 	Video.find()
 	.where('title').regex(re)
+      .populate('poster', 'nickname head_pic')
+      .populate('cover', 'cover_url')
+      .populate('video_url', 'vid_url')
 	.exec((err, videos)=> {
 		if(err) return res.send(err)
 		res.send(videos)
