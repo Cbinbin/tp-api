@@ -17,7 +17,7 @@ router.get('/:ifid', (req, res)=> {
 	.populate({path: 'pub_videos',
               select: 'poster title video_url cover length view_number like_number comment_number',
               populate: {path: 'poster video_url cover',
-                     select: 'nickname head_pic vid_url cover_url'}
+                     select: '-_id nickname head_pic vid_url cover_url'}
        })
 	.exec((err, info)=> {
 		if(err) return res.send(err)
