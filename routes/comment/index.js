@@ -38,11 +38,16 @@ router.post('/', (req, res)=> {
 			{ $push: {comments: cmet._id}
 			, $inc: {comment_number: 1}},
 			(err, txt)=> {
-				if(err) return res.send(err)
+				if(err) return console.log(err)
 				console.log(txt)
 			})
 			addMessage3(video.poster, req.uid, video._id, cmet._id)
-			res.send(cmet)
+                     Comment.findOne({_id: cmet._id})
+                     .populate('commenter', 'head_pic nickname')
+                     .exec((err, cmett)=> {
+                            if(err) return res.send(err)
+			       res.send(cmett)
+                     })
 		})
 	})
 })
@@ -60,7 +65,7 @@ router.delete('/:cid', (req, res)=> {
 					console.log('answer deleted success')
 				})
 			})
-			Video.update({_id: comment.video_id}, 
+			Video.update({_id: comment.video_id},
 			{$pull: {comments: comment._id},
 		     $inc: {comment_number: -1}},
 			(err, txt)=> {
