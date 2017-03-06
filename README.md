@@ -5,7 +5,7 @@ this is api that imitate the operation of Toupai.
  
    
 ## token
-> ### 小程序登录
+<!-- > ### 小程序登录
 ```js
 GET    http://localhost:3333/session?code=${code}&iv=${iv}&encryptedData=${encryptedData}
 ```
@@ -13,10 +13,10 @@ GET    http://localhost:3333/session?code=${code}&iv=${iv}&encryptedData=${encry
 注：   
 code: 小程序APIwx.login()返回的code   
 iv: 小程序APIwx.getUserInfo()返回的iv   
-encryptedData: 小程序APIwx.getUserInfo()返回的encryptedData   
+encryptedData: 小程序APIwx.getUserInfo()返回的encryptedData -->   
 
 
-> ### app登录
+> ### 登录
 >> #### 注册
 ```js
 POST    http://localhost:3333/reg
@@ -149,7 +149,9 @@ key: video
 DELETE    http://localhost:3333/user/video/del/:videoId?token=${token}
 ```
 => video deleted success    
-> ### 获取video下载链接
+
+
+<!-- > ### 获取video下载链接
 ```js
 GET    http://localhost:3333/video/:videoId/download
 ```
@@ -158,7 +160,7 @@ GET    http://localhost:3333/video/:videoId/download
 {
 	downloadUrl: ${downloadUrl}
 }
-```
+``` -->
 
 ----
 > ### 获取全部video(按观看人数降序排列)

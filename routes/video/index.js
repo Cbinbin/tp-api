@@ -119,20 +119,20 @@ router.get('/comment/:id', (req, res)=> {
 	})
 })
 
-router.get('/:id/download', (req, res)=> {
-	qiniu.conf.ACCESS_KEY = process.env.QN_ACCESS
-	qiniu.conf.SECRET_KEY = process.env.QN_SECRET
-	Video.findOne({_id: req.params.id})
-	.populate('video_url', 'vid_url')
-	.exec((err, vid)=> {
-		if(err) return res.send(err)
-		else if(!vid) return res.send({error: 'Not found the video Id'})
-		if(!vid.video_url) return res.send({error: 'Not found the video_url'})
-		var url = vid.video_url.vid_url + '?attname='
-		  , policy = new qiniu.rs.GetPolicy()
-		  , downloadUrl = policy.makeRequest(url)
-		res.send({downloadUrl: downloadUrl})
-	})
-})
+// router.get('/:id/download', (req, res)=> {
+// 	qiniu.conf.ACCESS_KEY = process.env.QN_ACCESS
+// 	qiniu.conf.SECRET_KEY = process.env.QN_SECRET
+// 	Video.findOne({_id: req.params.id})
+// 	.populate('video_url', 'vid_url')
+// 	.exec((err, vid)=> {
+// 		if(err) return res.send(err)
+// 		else if(!vid) return res.send({error: 'Not found the video Id'})
+// 		if(!vid.video_url) return res.send({error: 'Not found the video_url'})
+// 		var url = vid.video_url.vid_url + '?attname='
+// 		  , policy = new qiniu.rs.GetPolicy()
+// 		  , downloadUrl = policy.makeRequest(url)
+// 		res.send({downloadUrl: downloadUrl})
+// 	})
+// })
 
 module.exports = router
