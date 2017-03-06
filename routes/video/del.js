@@ -8,7 +8,7 @@ const router = require('express').Router()
     , heroku = require('../../hostUrl')
 
 function unlinkfile(url) {
-	fs.unlink(url.substring(21), (err)=> {
+	fs.unlink(url.substring(23), (err)=> {
 		if(err) return console.log(err)
 		console.log(`${url} deleted success`)
 	})
